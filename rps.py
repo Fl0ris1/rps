@@ -1,5 +1,63 @@
 from tkinter import *
-import random
+from random import choice
+
+player_score=0
+computer_score=0
+options=["rock","paper","scissors"]
+
+def computer_wins():
+    global computer_score, player_score
+    computer_score+=1
+    winner_lbl.config(text="COMPUTER WON")
+    comp_score_lbl.config(text=f"Computer Score: {computer_score}")
+    player_score_lbl.config(text=f"Your Score: {player_score}")
+
+def player_wins():
+    global computer_score,player_score
+    player_score+=1
+    winner_lbl.config(text="YOU WON")
+    comp_score_lbl.config(text=f"Computer Score: {computer_score}")
+    player_score_lbl.config(text=f"Your Score: {player_score}")
+
+def tie():
+    winner_lbl.config(text="Tie!")
+    comp_score_lbl.config(text=f"Computer Score: {computer_score}")
+    player_score_lbl.config(text=f"Your Score: {player_score}")
+
+def computer_choice():
+    return choice(options)
+
+def player_choice(player_input):
+    global computer_score,player_score
+    print(player_input)
+
+    computer_input=computer_choice()
+    print(computer_input)
+
+    comp_choice_lbl.config(text=f"Computer Selected: {computer_input}")    
+    player_choice_lbl.config(text=f"You Selected: {player_input}")
+
+    if player_input==computer_input:
+        tie()
+    
+    if player_input=="rock":
+        if computer_input=="paper":
+            computer_wins()
+        elif computer_input=="scissors":
+            player_wins()
+
+    elif player_input=="paper":
+        if computer_input=="scissors":
+            computer_wins()
+        elif computer_input=="rock":
+            player_wins()
+    elif player_input=="scissors":
+        if computer_input=="rock":
+            computer_wins()
+        elif computer_input=="paper":
+            player_wins()
+
+
 
 root=Tk()
 root.geometry("700x400")
@@ -19,13 +77,13 @@ frame.pack()
 player_options=Label(frame,text="Player Options: ",font=("consolas",14,"bold"),bg="#AAABBC",fg="#1D4C72")
 player_options.grid(row=0,column=0,pady=10)
 
-rock_but=Button(frame,text="Rock",font=("consolas",12,"bold"),bg="#3C787E",fg="#1D4C72",bd=0,width=15,pady=5)
+rock_but=Button(frame,text="Rock",font=("consolas",12,"bold"),bg="#3C787E",fg="#1D4C72",bd=0,width=15,pady=5,command=lambda:player_choice(options[0]))
 rock_but.grid(row=1,column=1,padx=8,pady=5)
 
-paper_but=Button(frame,text="Paper",font=("consolas",12,"bold"),bg="#3C787E",fg="#1D4C72",bd=0,width=15,pady=5)
+paper_but=Button(frame,text="Paper",font=("consolas",12,"bold"),bg="#3C787E",fg="#1D4C72",bd=0,width=15,pady=5,command=lambda:player_choice(options[1]))
 paper_but.grid(row=1,column=2,padx=8,pady=5)
 
-scissors_but=Button(frame,text="Scissors",font=("consolas",12,"bold"),bg="#3C787E",fg="#1D4C72",bd=0,width=15,pady=5)
+scissors_but=Button(frame,text="Scissors",font=("consolas",12,"bold"),bg="#3C787E",fg="#1D4C72",bd=0,width=15,pady=5,command=lambda:player_choice(options[2]))
 scissors_but.grid(row=1,column=3,padx=8,pady=5)
 
 score_lbl=Label(frame,text="Score: ",font=("consolas",14,"bold"),bg="#AAABBC",fg="#1D4C72")
